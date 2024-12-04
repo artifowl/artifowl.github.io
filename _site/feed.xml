@@ -1,0 +1,58 @@
+
+
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <id>http://localhost:4000/</id>
+  <title>Artifowl</title>
+  <subtitle>A minimal, responsive and feature-rich Jekyll theme for my write up.</subtitle>
+  <updated>2024-12-04T15:32:47+09:00</updated>
+  <author>
+    <name>Artifowl</name>
+    <uri>http://localhost:4000/</uri>
+  </author>
+  <link rel="self" type="application/atom+xml" href="http://localhost:4000/feed.xml"/>
+  <link rel="alternate" type="text/html" hreflang="fr"
+    href="http://localhost:4000/"/>
+  <generator uri="https://jekyllrb.com/" version="4.3.4">Jekyll</generator>
+  <rights> © 2024 Artifowl </rights>
+  <icon>/assets/img/favicons/favicon.ico</icon>
+  <logo>/assets/img/favicons/favicon-96x96.png</logo>
+
+
+  
+  <entry>
+    <title>OSINT Exercise #002</title>
+    <link href="http://localhost:4000/posts/OSINT-1/" rel="alternate" type="text/html" title="OSINT Exercise #002" />
+    <published>2024-12-04T10:00:00+09:00</published>
+  
+    <updated>2024-12-04T10:00:00+09:00</updated>
+  
+    <id>http://localhost:4000/posts/OSINT-1/</id>
+    <content type="text/html" src="http://localhost:4000/posts/OSINT-1/" />
+    <author>
+      <name>Artifowl</name>
+    </author>
+
+  
+    
+    <category term="OSINT" />
+    
+    <category term="gralhix" />
+    
+  
+
+  <summary>Aujourd’hui nous nous attaquons à l’Exercice #002 d’OSINT.
+La tâche consiste à partir de l’image ci-dessous de répondre à diverses interrogations.
+
+Voici l’image :
+
+
+
+1) Quel est le nom de la station de train ?
+
+La réponse à la question 1 est tout de suite apparente. L’écriteau FLINDERS STREET saute aux yeux et, au cas où la myopie pourrait vous toucher, on peut zoomer avec l’éditeur de photo p...</summary>
+
+  </entry>
+
+</feed>
+
+

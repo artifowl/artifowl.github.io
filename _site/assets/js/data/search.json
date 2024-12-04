@@ -1,0 +1,21 @@
+[
+  
+  {
+    "title": "OSINT Exercise #002",
+    "url": "/posts/OSINT-1/",
+    "categories": "OSINT, gralhix",
+    "tags": "osint, gralhix, medium",
+    "date": "2024-12-04 10:00:00 +0900",
+    
+
+
+
+
+
+    
+    "snippet": "Aujourd’hui nous nous attaquons à l’Exercice #002 d’OSINT.La tâche consiste à partir de l’image ci-dessous de répondre à diverses interrogations.Voici l’image :1) Quel est le nom de la station de t...",
+    "content": "Aujourd’hui nous nous attaquons à l’Exercice #002 d’OSINT.La tâche consiste à partir de l’image ci-dessous de répondre à diverses interrogations.Voici l’image :1) Quel est le nom de la station de train ?La réponse à la question 1 est tout de suite apparente. L’écriteau FLINDERS STREET saute aux yeux et, au cas où la myopie pourrait vous toucher, on peut zoomer avec l’éditeur de photo préinstallé sur votre OS ou encore avec des outils gratuits disponibles (par exemple, LunaPic).Zoom sur l’enseigne de la station de train Flinders Street.2) Quelle est la taille du plus grand bâtiment que l’on voit ?Maintenant que nous avons le nom de la station de train, avec une simple recherche sur Google en tapant “Flinders Street station train platform”, on peut comparer les images et les sources pour trouver la localisation de cette station : Melbourne.C’est un bon point de départ, mais revenons sur l’image une seconde. Nous avons sur cette dernière trois immeubles, ces trois immeubles comportent chacun une enseigne, mais la qualité de l’image ne nous laisse deviner qu’un seul des trois.Vue des bâtiments autour de la station Flinders Street.On distingue une enseigne avec les lettres H et T, mais la lettre du milieu est floue. Est-ce un V ? Un N ? Ou un W ? Pas de panique, on va utiliser Google Map pour démêler tout ça.En se localisant sur Flinders Street, nous avons la possibilité de faire la recherche par secteur et c’est justement ce que nous allons faire en testant les trois possibilités. Pour spécifier plus particulièrement ce que l’on cherche, on rajoutera le mot-clé building ou tower. HVT ne donnera rien, HNT non plus et HWT quant à lui retourne ceci :Il semble bien que ce soit ce bâtiment. Une petite recherche sur Google Images pour confirmer, et bingo ! Maintenant, on s’intéresse au plus grand bâtiment, celui qui se trouve à droite de notre HWT Tower. Direction donc pour Google Street View pour une visite virtuelle.La vue depuis le pont Evan Walker, avec la HWT Tower à l’horizon.En nous positionnant sur le pont qui traverse l’Evan Walker, on aperçoit clairement l’enseigne IBM sur le bâtiment à droite. Une recherche rapide sur “IBM Tower Melbourne height” et voilà la réponse à notre question : la IBM Tower mesure 131 mètres !"
+  }
+  
+]
+
