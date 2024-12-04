@@ -14,7 +14,7 @@ timezone: Asia/Tokyo
 # jekyll-seo-tag settings › https://github.com/jekyll/jekyll-seo-tag/blob/master/docs/usage.md
 # ↓ --------------------------
 
-title: Artifowll # the main title
+title: Artifowl # the main title
 
 tagline: M1 IT Student # it will display as the subtitle
 
@@ -148,7 +148,7 @@ pwa:
 paginate: 10
 
 # The base URL of your site
-baseurl: "/artifowl.github.io"
+baseurl: ""
 
 # ------------ The following options are not recommended to be modified ------------------
 
