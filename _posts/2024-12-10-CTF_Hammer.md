@@ -17,16 +17,16 @@ Notre cible pour ce CTF est la machine avec l'IP suivante : **10.10.43.36** et n
 
 ### Phase de reconnaissance 
 Pour commencer, nous allons scanner les ports disponibles. Étant donné que notre cible est une application web, nous réaliserons un scan rapide et agressif sur tous les ports, comme suit : 
-![Image nmap](https://media.discordapp.net/attachments/1313520626299961344/1317689184638734387/image.png?ex=675f992f&is=675e47af&hm=79f0c7ae564fa49feb02f916072acf7544a0f9af0ee84b4f5062e2b6574c0d91&=&format=webp&quality=lossless&width=837&height=282){: .normal width="600" height="600" }
+![Image nmap](https://i.ibb.co/Jqt0jhB/Screenshot-2024-12-15-120608.png){: .normal width="600" height="600" }
 
 Nous découvrons qu'un *service SSH* fonctionne sur le port 22, ainsi qu'un *service compatible avec le protocole WASTE* qui est un protocole de communication peer-to-peer (P2P) qui permet de créer des réseaux privés sécurisés. Cependant, étant donné que nous avons effectué un scan superficiel, il est possible que le scan ait mal identifié un service, et qu'en réalité, le port héberge l'application web cible. Le meilleur moyen de le vérifier est de tester nous-mêmes : 
 
-![Image](https://media.discordapp.net/attachments/1313520626299961344/1317689500956233789/image.png?ex=675f997a&is=675e47fa&hm=05376d0c6a5f83977485d41f9acd9a8e48509d1434267becc4936360332df627&=&format=webp&quality=lossless&width=1258&height=662){: .normal width="600" height="600" }
+![Image](https://i.ibb.co/RBC3FRr/Screenshot-2024-12-15-120734.png){: .normal width="600" height="600" }
 
 ### Identification de l'application web
 Bingo ! Nous avons deux champs d'authentification : email et mot de passe. Avant de procéder, nous allons analyser les technologies utilisées sur le site et examiner le code source de la page pour repérer d’éventuelles informations intéressantes. 
 
-![Image avec wappalyzer](https://media.discordapp.net/attachments/1313520626299961344/1317690332380528650/image.png?ex=675f9a40&is=675e48c0&hm=0c2ab2b44105434362d8c3c4dcb29c245f0eff9ffed90caaad5bb3a616ed2cd8&=&format=webp&quality=lossless&width=398&height=437){: .normal width="300" height="300" } ![Image code source](https://media.discordapp.net/attachments/1313520626299961344/1317689638068158535/image.png?ex=675f999b&is=675e481b&hm=0f4e81cd9062a47c5a062e74dfb209490324b5fb15624cbe1edae705c4cca289&=&format=webp&quality=lossless&width=1006&height=662){: .normal width="500" height="500" }
+![Image avec wappalyzer](https://i.ibb.co/Lx5PqhG/Screenshot-2024-12-15-121052.png){: .normal width="300" height="300" } ![Image code source](https://i.ibb.co/89sxfPp/Screenshot-2024-12-15-120806.png){: .normal width="500" height="500" }
 
 Nous constatons que le site tourne sur un serveur *Apache*, utilise *Bootstrap* pour le front-end, la librairie *jQuery* pour les scripts côté client, et du *PHP* pour le back-end. Le code source nous révèle également une note pour les développeurs, indiquant que les répertoires doivent commencer par **hmr_**.
 
@@ -34,13 +34,13 @@ Nous constatons que le site tourne sur un serveur *Apache*, utilise *Bootstrap* 
 Nous avons suffisamment d'informations pour effectuer deux tests simples.
 
 Nous allons vérifier si les champs email et mot de passe sont vulnérables aux injections SQL : 
-![Image](https://media.discordapp.net/attachments/1313520626299961344/1317691268209578035/image.png?ex=675f9b1f&is=675e499f&hm=7d10f2c405f06d75e872916ddfdd31b3498a00b5a169507115690b59be9bed1f&=&format=webp&quality=lossless&width=1328&height=383){: .normal width="500" height="500" } ![Image](https://media.discordapp.net/attachments/1313520626299961344/1317692660470779954/image.png?ex=675f9c6b&is=675e4aeb&hm=d4bbb6f00ec09599e1ea860773ab8298088a74346e057a377d39fee3095e33f7&=&format=webp&quality=lossless&width=1027&height=457){: .normal width="500" height="500" }
+![Image](https://i.ibb.co/2qhXcqc/Screenshot-2024-12-15-121433.png){: .normal width="500" height="500" } ![Image](https://i.ibb.co/tqKh6Z2/Screenshot-2024-12-15-122000.png){: .normal width="500" height="500" }
 
 Il semble que non.
 
 Ensuite, nous allons répertorier les sous-répertoires de **http://10.10.43.36:1337/**. Nous testerons avec une liste de mots communs, puis une autre liste commençant par **hmr_** (en référence à la convention de nommage vue dans le code source). 
 
-![Image Gobuster](https://media.discordapp.net/attachments/1313520626299961344/1317694109581967412/image.png?ex=675f9dc5&is=675e4c45&hm=e2fc69d85c2f905f7aa37c71b7c96b7c13ffef745fe9d4442ae87e6e80b46a2d&=&format=webp&quality=lossless&width=1440&height=238){: .normal width="700" height="700" }
+![Image Gobuster](https://i.ibb.co/j3j6tqG/Screenshot-2024-12-15-122509.png){: .normal width="700" height="700" }
 
 Nous trouvons plusieurs répertoires intéressants. Je ne vais pas tous les lister, mais nous allons nous concentrer sur les plus pertinents.  
 
@@ -49,39 +49,39 @@ Nous trouvons plusieurs répertoires intéressants. Je ne vais pas tous les list
 
 *Le répertoire vendor* contient des fichiers relatifs à la librairie `php-jwt`, qui gère les **JSON Web Tokens (JWT)**. En fouillant un peu, nous découvrons le répertoire GitHub officiel, un fichier **README** expliquant le fonctionnement des tokens, ainsi que leurs différents algorithmes.
 
-![Image](https://media.discordapp.net/attachments/1313520626299961344/1317695033687670885/image.png?ex=675f9ea1&is=675e4d21&hm=4c51210fdfc4636757fc021aad30f24b4b36105d2286c079a3391c31a9d60011&=&format=webp&quality=lossless&width=441&height=437){: .normal width="360" height="360" } ![Image](https://media.discordapp.net/attachments/1313520626299961344/1317695135559192586/image.png?ex=675f9eb9&is=675e4d39&hm=5002fa8b10079681dcbb11028b553f5540e7be1b5d8b5508d1b126a653992ecc&=&format=webp&quality=lossless&width=565&height=661){: .normal width="300" height="300" }
+![Image](https://i.ibb.co/HFyjjd2/Screenshot-2024-12-15-122955.png){: .normal width="360" height="360" } ![Image](https://i.ibb.co/cTjggg3/Screenshot-2024-12-15-122927.png){: .normal width="300" height="300" }
 
 
 *Le répertoire hmr_log* contient des logs d’erreurs, notamment des tentatives de connexion échouées pour un utilisateur <mark>tester@hammer.thm</mark>. Nous pouvons voir plusieurs tentatives infructueuses qui ont abouti à une déconnexion forcée de l'utilisateur avec le message **"Request exceeded the limit of 10..."**.
 
-![Image](https://media.discordapp.net/attachments/1313520626299961344/1317694694888706058/image.png?ex=675f9e50&is=675e4cd0&hm=763235eada79038816bf1d439b1809423179b263796100d5c7726dd4ce702778&=&format=webp&quality=lossless&width=941&height=662){: .normal width="500" height="500" } ![Image](https://media.discordapp.net/attachments/1313520626299961344/1317694808294293535/image.png?ex=675f9e6b&is=675e4ceb&hm=8c573422e73da6345cc35123bdaa55b0512afac3a497eb477b86124948dc5e00&=&format=webp&quality=lossless&width=1440&height=383){: .normal width="500" height="500" }
+![Image](https://i.ibb.co/60NJXp1/Screenshot-2024-12-15-122759.png){: .normal width="500" height="500" } ![Image](https://i.ibb.co/2jjYhX8/Screenshot-2024-12-15-122734.png){: .normal width="500" height="500" }
 
 Nous allons tester nous-mêmes pour confirmer. Mais avant cela, nous allons lancer un test de bruteforce avec *hydra* en arrière-plan pour voir si l'utilisateur possède un mot de passe faible (spoiler : cela ne donnera rien). 
 
-![Image hydra](https://media.discordapp.net/attachments/1313520626299961344/1317696392675856507/image.png?ex=675f9fe5&is=675e4e65&hm=08187884ef8dc3d9dec064b3d5bde837a10cae97eceffbf574f6efb41f38d65c&=&format=webp&quality=lossless&width=1440&height=511){: .normal width="600" height="600" }
+![Image hydra](https://i.ibb.co/bQ8hyQk/Screenshot-2024-12-15-123457.png){: .normal width="600" height="600" }
 
 ### Analyse de la page "Forgot your password?"
 Nous nous intéressons maintenant à la page "Forgot your password?". Comme d'habitude, nous jetons un œil au code source avant de faire quoi que ce soit. 
 
-![Image](https://media.discordapp.net/attachments/1313520626299961344/1317697657459834901/image.png?ex=675fa113&is=675e4f93&hm=35495e9d64480e4675a0588131340ee84674073e9cd1082527347441979151da&=&format=webp&quality=lossless&width=861&height=662){: .normal width="410" height="410" } ![Image](https://media.discordapp.net/attachments/1313520626299961344/1317696794305757274/image.png?ex=675fa045&is=675e4ec5&hm=c76d0f85105eda6697a5ce3a363f3ae0b45bc47081150478af34cb4aa7180060&=&format=webp&quality=lossless&width=832&height=662){: .normal width="400" height="400" }
+![Image](https://i.ibb.co/2yn9Prs/Screenshot-2024-12-15-123940.png){: .normal width="410" height="410" } ![Image](https://i.ibb.co/YcFPCZJ/Screenshot-2024-12-15-123632.png){: .normal width="400" height="400" }
 
 Nous remarquons un *script JS* contenant une fonction `startCountdown()` qui est censée nous rediriger vers la page **/logout.php** lorsque le timer atteint zéro.
 
- ![Image timer](https://media.discordapp.net/attachments/1313520626299961344/1317697446654246912/image.png?ex=675fa0e0&is=675e4f60&hm=417d35692e16ed824f9a1bcd733fabb66c75683ba8b716d305945e375a571093&=&format=webp&quality=lossless&width=748&height=662){: .normal width="400" height="400" }
+ ![Image timer](https://i.ibb.co/ryHVd5x/Screenshot-2024-12-15-123908.png){: .normal width="400" height="400" }
 
 En utilisant *BurpSuite*, nous interceptons la requête lorsque nous envoyons un chiffre (ici 1234), et remarquons qu'en plus du paramètre recovery_code, il y a un autre paramètre **s**, qui semble correspondre au nombre de secondes restantes. Nous pourrions donc envisager de modifier cet argument avec un nombre arbitraire élevé pour prolonger le délai de récupération.
 
-![Image](https://media.discordapp.net/attachments/1313520626299961344/1317697816164044820/image.png?ex=675fa139&is=675e4fb9&hm=8c14ab78b0a0bd0117a11284bed660e6eaf7255cca6ae4a8a6fa0a16453e8894&=&format=webp&quality=lossless&width=636&height=661){: .normal width="210" height="210" } ![Image](https://media.discordapp.net/attachments/1313520626299961344/1317698098843226273/image.png?ex=675fa17c&is=675e4ffc&hm=0f61bd21a9d978babe0dab8bdb6270790a3b5f8d3b3e9ed3e0b75ac21cea0704&=&format=webp&quality=lossless&width=1440&height=528){: .normal width="600" height="600" }
+![Image](https://i.ibb.co/BVC8Qnq/Screenshot-2024-12-15-124035.png){: .normal width="210" height="210" } ![Image](https://i.ibb.co/bKccgTk/Screenshot-2024-12-15-124137.png){: .normal width="600" height="600" }
 
 ### Attaque par bruteforce
 Cette opportunité de prolonger le délai nous permet d’envisager *une attaque par bruteforce*, où nous tenterions toutes les possibilités possibles, c'est à dire les 10000 nombres possible. Cependant, comme nous l’avons vu dans les logs, **il y a une limite de tentatives** que nous pouvons confirmer dès la septième tentative (on remarque immédiatement une taille de réponse inhabituelle). 
 
-![Image](https://media.discordapp.net/attachments/1313520626299961344/1317699142272942150/image.png?ex=675fa275&is=675e50f5&hm=6118fcd35a447debdb4498c5ba1edbd0c78cdb159ee66bdcbac8633d45a7591c&=&format=webp&quality=lossless&width=1345&height=397){: .normal width="500" height="500" } ![Image](https://media.discordapp.net/attachments/1313520626299961344/1317699266080407614/image.png?ex=675fa292&is=675e5112&hm=14c0027ace1c541489f1591ef0a07e93da0ebffbf0dcf66df15e4d73a42d21a5&=&format=webp&quality=lossless&width=675&height=512){: .normal width="500" height="500" }
+![Image](https://i.ibb.co/8jFghvT/Screenshot-2024-12-15-124301.png){: .normal width="500" height="500" } ![Image](https://i.ibb.co/VjN0VJ9/Screenshot-2024-12-15-124553.png){: .normal width="500" height="500" }
 
 ### Contournement de la limite de tentatives
 Dès que nous essayons d’accéder à reset_password.php, nous sommes bloqués sur un écran de sécurité. Pour contourner cette restriction et réessayer, nous allons changer notre cookie de session. 
 
-![Image](https://media.discordapp.net/attachments/1313520626299961344/1317699468908433479/image.png?ex=675fa2c3&is=675e5143&hm=5a83c2353ce1debf73c0d93540dce4103053eef1d8adcb9c9eb56fb92dd99a2e&=&format=webp&quality=lossless&width=735&height=662){: .normal width="300" height="300" } ![Image](https://media.discordapp.net/attachments/1313520626299961344/1317700027472416859/image.png?ex=675fa348&is=675e51c8&hm=14cefff6ffb0503578c5dfeeba17ee402f4ebf1270a0a1432711799eca4748b2&=&format=webp&quality=lossless&width=1251&height=662){: .normal width="510" height="510" }
+![Image](https://i.ibb.co/7kf6kzQ/Screenshot-2024-12-15-124710.png){: .normal width="300" height="300" } ![Image](https://i.ibb.co/sQDQDy9/Screenshot-2024-12-15-124920.png){: .normal width="510" height="510" }
 
 Maintenant, un prolbème se pose : **comment contourner cette limite de tentatives ?**  
 Après plusieurs tentatives infructueuses, j'ai trouvé une faille simple dans le système :  
