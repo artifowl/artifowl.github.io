@@ -17,11 +17,11 @@ Notre cible pour ce CTF est la machine avec l'IP suivante : **10.10.43.36** et n
 
 ### Phase de reconnaissance 
 Pour commencer, nous allons scanner les ports disponibles. Étant donné que notre cible est une application web, nous réaliserons un scan rapide et agressif sur tous les ports, comme suit : 
-![Image nmap](https://i.ibb.co/Jqt0jhB/Screenshot-2024-12-15-120608.png){: .normal width="600" height="600" }
+![Image nmap](https://i.ibb.co/Jqt0jhB/Screenshot-2024-12-15-120608.png){: .normal }
 
 Nous découvrons qu'un *service SSH* fonctionne sur le port 22, ainsi qu'un *service compatible avec le protocole WASTE* qui est un protocole de communication peer-to-peer (P2P) qui permet de créer des réseaux privés sécurisés. Cependant, étant donné que nous avons effectué un scan superficiel, il est possible que le scan ait mal identifié un service, et qu'en réalité, le port héberge l'application web cible. Le meilleur moyen de le vérifier est de tester nous-mêmes : 
 
-![Image](https://i.ibb.co/RBC3FRr/Screenshot-2024-12-15-120734.png){: .normal width="600" height="600" }
+![Image](https://i.ibb.co/RBC3FRr/Screenshot-2024-12-15-120734.png)
 
 ### Identification de l'application web
 Bingo ! Nous avons deux champs d'authentification : email et mot de passe. Avant de procéder, nous allons analyser les technologies utilisées sur le site et examiner le code source de la page pour repérer d’éventuelles informations intéressantes. 
@@ -34,13 +34,13 @@ Nous constatons que le site tourne sur un serveur `Apache`, utilise `Bootstrap` 
 Nous avons suffisamment d'informations pour effectuer deux tests simples.
 
 Nous allons vérifier si les champs email et mot de passe sont vulnérables aux injections `SQL` : 
-![Image](https://i.ibb.co/2qhXcqc/Screenshot-2024-12-15-121433.png){: .normal width="500" height="500" } ![Image](https://i.ibb.co/tqKh6Z2/Screenshot-2024-12-15-122000.png){: .normal width="500" height="500" }
+![Image](https://i.ibb.co/2qhXcqc/Screenshot-2024-12-15-121433.png){: .normal } ![Image](https://i.ibb.co/tqKh6Z2/Screenshot-2024-12-15-122000.png){: .normal }
 
 Il semble que non.
 
 Ensuite, nous allons répertorier les sous-répertoires de **http://10.10.43.36:1337/**. Nous testerons avec une liste de mots communs, puis une autre liste commençant par **hmr_** (en référence à la convention de nommage vue dans le code source). 
 
-![Image Gobuster](https://i.ibb.co/j3j6tqG/Screenshot-2024-12-15-122509.png){: .normal width="700" height="700" }
+![Image Gobuster](https://i.ibb.co/j3j6tqG/Screenshot-2024-12-15-122509.png)
 
 Nous trouvons plusieurs répertoires intéressants. Je ne vais pas tous les lister, mais nous allons nous concentrer sur les plus pertinents.  
 
@@ -49,16 +49,16 @@ Nous trouvons plusieurs répertoires intéressants. Je ne vais pas tous les list
 
 *Le répertoire vendor* contient des fichiers relatifs à la librairie `php-jwt`, qui gère les **JSON Web Tokens (JWT)**. En fouillant un peu, nous découvrons le répertoire GitHub officiel, un fichier **README** expliquant le fonctionnement des tokens, ainsi que leurs différents algorithmes.
 
-![Image](https://i.ibb.co/HFyjjd2/Screenshot-2024-12-15-122955.png){: .normal width="360" height="360" } ![Image](https://i.ibb.co/cTjggg3/Screenshot-2024-12-15-122927.png){: .normal width="300" height="300" }
+![Image](https://i.ibb.co/cTjggg3/Screenshot-2024-12-15-122927.png){: .normal width="360" height="360" } ![Image](https://i.ibb.co/HFyjjd2/Screenshot-2024-12-15-122955.png){: .normal width="300" height="300" }
 
 
 *Le répertoire hmr_log* contient des logs d’erreurs, notamment des tentatives de connexion échouées pour un utilisateur <mark>tester@hammer.thm</mark>. Nous pouvons voir plusieurs tentatives infructueuses qui ont abouti à une déconnexion forcée de l'utilisateur avec le message **"Request exceeded the limit of 10..."**.
 
-![Image](https://i.ibb.co/60NJXp1/Screenshot-2024-12-15-122759.png){: .normal width="500" height="500" } ![Image](https://i.ibb.co/2jjYhX8/Screenshot-2024-12-15-122734.png){: .normal width="500" height="500" }
+![Image](https://i.ibb.co/60NJXp1/Screenshot-2024-12-15-122759.png){: .normal } ![Image](https://i.ibb.co/2jjYhX8/Screenshot-2024-12-15-122734.png){: .normal }
 
 Nous allons tester nous-mêmes pour confirmer. Mais avant cela, nous allons lancer un test de bruteforce avec `hydra` en arrière-plan pour voir si l'utilisateur possède un mot de passe faible (*spoiler : cela ne donnera rien*). 
 
-![Image hydra](https://i.ibb.co/bQ8hyQk/Screenshot-2024-12-15-123457.png){: .normal width="600" height="600" }
+![Image hydra](https://i.ibb.co/bQ8hyQk/Screenshot-2024-12-15-123457.png)
 
 ### Analyse de la page "Forgot your password?"
 Nous nous intéressons maintenant à la page **"Forgot your password?"**. Comme d'habitude, nous jetons un œil au code source avant de faire quoi que ce soit. 
@@ -67,7 +67,7 @@ Nous nous intéressons maintenant à la page **"Forgot your password?"**. Comme 
 
 Nous remarquons un **script JS** contenant une fonction `startCountdown()` qui est censée nous rediriger vers la page **/logout.php** lorsque le timer atteint zéro.
 
- ![Image timer](https://i.ibb.co/ryHVd5x/Screenshot-2024-12-15-123908.png){: .normal width="400" height="400" }
+ ![Image timer](https://i.ibb.co/ryHVd5x/Screenshot-2024-12-15-123908.png)
 
 En utilisant **BurpSuite**, nous interceptons la requête lorsque nous envoyons un chiffre (ici 1234), et remarquons qu'en plus du paramètre  `recovery_code`, il y a un autre paramètre `s`, qui semble correspondre au nombre de secondes restantes. Nous pourrions donc envisager de modifier cet argument avec un nombre arbitraire élevé pour prolonger le délai de récupération.
 
@@ -76,7 +76,7 @@ En utilisant **BurpSuite**, nous interceptons la requête lorsque nous envoyons 
 ### Attaque par bruteforce
 Cette opportunité de prolonger le délai nous permet d’envisager *une attaque par bruteforce*, où nous tenterions toutes les possibilités possibles, c'est à dire les **10000 nombres possible**. Cependant, comme nous l’avons vu dans les logs, **il y a une limite de tentatives** que nous pouvons confirmer dès la septième tentative (on remarque immédiatement une taille de réponse inhabituelle). 
 
-![Image](https://i.ibb.co/8jFghvT/Screenshot-2024-12-15-124301.png){: .normal width="500" height="500" } ![Image](https://i.ibb.co/VjN0VJ9/Screenshot-2024-12-15-124553.png){: .normal width="500" height="500" }
+![Image](https://i.ibb.co/8jFghvT/Screenshot-2024-12-15-124301.png){: .normal } ![Image](https://i.ibb.co/VjN0VJ9/Screenshot-2024-12-15-124553.png){: .normal }
 
 ### Contournement de la limite de tentatives
 Dès que nous essayons d’accéder à `reset_password.php`, nous sommes bloqués sur un écran de sécurité. Pour contourner cette restriction et réessayer, nous allons **changer notre cookie de session**. 
@@ -177,7 +177,9 @@ if __name__ == "__main__":
 ```
 
 Finalement, après l'exécution du script et 10 minutes passées à regarder mon écran tourner dans le vide, j'ai enfin obtenu la réponse attendue :
-![Image](https://i.ibb.co/hVqcP1m/Screenshot-2024-12-15-131349.png){: .normal width="600" height="600" }
+
+
+![Image](https://i.ibb.co/hVqcP1m/Screenshot-2024-12-15-131349.png)
 
 On peut voir ainsi, que lorsque le code de récupération est correct, le site nous demande d'entrer un nouveau mot de passe et de le confirmer. Qu'attendons-nous alors ? Maintenant qu'on a cette information, on va modifier très légèrement notre code Python pour qu'en plus d'afficher la réponse lorsqu'il trouve le code, qu'il envoie aussi une requête pour changer le mot de passe.
 ```python
@@ -195,23 +197,23 @@ if "Invalid or expired recovery code!" not in response_recovery.text and "Time e
 ```
 
 Bon et bien plus qu'à attendre une autre dizaine de minutes...
-![Image](https://i.ibb.co/mDnZyHQ/Screenshot-2024-12-15-131429.png){: .normal width="600" height="600" }
+![Image](https://i.ibb.co/mDnZyHQ/Screenshot-2024-12-15-131429.png)
 
 
-**Biiiingo !**
+**🎉 Biiiingo ! 🎉**
 
 On a donc notre email : <mark>tester@hammer.thm</mark> et notre mot de passe défini : <mark>root</mark>. Sans plus attendre, connectons-nous pour récupérer notre drapeau sur la page dashboard.php !
 
-![Image](https://i.ibb.co/KwF5ZBp/Screenshot-2024-12-15-134737.png){: .normal width="410" height="410" }
+![Image](https://i.ibb.co/KwF5ZBp/Screenshot-2024-12-15-134737.png)
 
 
 
 ### Accès dashboard
 Comme d'habitude, on va jeter un coup d'œil au code source.
 
-![Image](https://i.ibb.co/QD07XTD/Screenshot-2024-12-15-134845.png){: .normal width="410" height="410" } 
+![Image](https://i.ibb.co/QD07XTD/Screenshot-2024-12-15-134845.png){: .normal } 
 
-![Image](https://i.ibb.co/CmY0kRJ/Screenshot-2024-12-15-134915.png){: .normal width="400" height="400" }
+![Image](https://i.ibb.co/CmY0kRJ/Screenshot-2024-12-15-134915.png){: .normal }
 
 Ici deux choses à noter : premièrement, il y a une fonction JS qui vérifie si notre cookie `persistentSession` est à true, si non, alors nous sommes déconnectés (je viens d'ailleurs d'en faire les frais, ahaha).
 
@@ -220,11 +222,11 @@ Deuxièmement, on trouve une fonction AJAX qui, lorsqu'une requête POST est env
 ### Exploration du cookie et du token
 En première intention, pour éviter les déconnexions en continue, on va changer notre cookie `persistentSession` à **yes** et, par la même occasion, changer sa date d'expiration, car comme vous pouvez le voir, le cookie est déjà expiré depuis 1h00.
 
-![Image](https://i.ibb.co/pvy3XmQ/Screenshot-2024-12-15-135323.png){: .normal width="410" height="410" } 
+![Image](https://i.ibb.co/pvy3XmQ/Screenshot-2024-12-15-135323.png)
 
 
 Ensuite, on va jeter un coup d'œil à notre token et examiner de quoi sont constitués son *payload* et son *header*.
-![Image](https://i.ibb.co/4sw1Sbh/Screenshot-2024-12-15-135820.png){: .normal width="410" height="410" } 
+![Image](https://i.ibb.co/4sw1Sbh/Screenshot-2024-12-15-135820.png)
 
 
 ### Exploration du shell web
@@ -240,17 +242,18 @@ On a vu, lors de l'utilisation de **ls** (seule commande qui nous était possibl
 
 Pour cela, on va d'abord récupérer la signature associée à la clé :
 
-![Image](https://i.ibb.co/Tq13J6G/Screenshot-2024-12-15-140046.png){: .normal width="400" height="400" }
+![Image](https://i.ibb.co/Tq13J6G/Screenshot-2024-12-15-140046.png){: .normal }
 
-![Image](https://i.ibb.co/D5qdj4y/Screenshot-2024-12-15-141152.png){: .normal width="400" height="400" }
+![Image](https://i.ibb.co/D5qdj4y/Screenshot-2024-12-15-141152.png){: .normal }
 
 Puis on va créer notre token, en nous attribuant le rôle d'`admin` (rien que ça), en insérant le chemin de la clé sur le serveur et de sa signature.
 
-![Image](https://i.ibb.co/MNR62dH/Screenshot-2024-12-15-141249.png){: .normal width="600" height="600" }
+![Image](https://i.ibb.co/MNR62dH/Screenshot-2024-12-15-141249.png)
 
 Maintenant que nous avons notre token d'`admin`, il ne nous reste plus qu'à l'insérer dans le header de notre requête POST lorsque nous entrerons une commande, ici `cat /home/ubuntu/flag.txt`.
 
-![Image](https://i.ibb.co/PcVSc8y/Screenshot-2024-12-15-141426.png){: .normal width="600" height="600" }
+![Image](https://i.ibb.co/PcVSc8y/Screenshot-2024-12-15-141426.png)
 
 
-Et voilà ! 🎉 CTF accompli ! 🏆
+**Et voilà !**  
+**🎉 CTF accompli ! 🏆**
