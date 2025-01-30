@@ -1,6 +1,6 @@
 ---
 title: "SILVER PLATTER - Walkthrough"
-date: 2025-01-28 10:00:00 +0900
+date: 2025-01-11 10:00:00 +0900
 categories: [CTF, Pentest]
 tags: [ctf, pentest, thm, medium]
 image:
