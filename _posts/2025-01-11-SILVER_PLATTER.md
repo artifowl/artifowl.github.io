@@ -66,7 +66,7 @@ En revenant au site web sur le port 80, nous remarquons une mention de **Silverp
 
 ![Image](https://i.ibb.co/2jthWxf/image.png){: .normal }
 
-En essayant d'accéder à Silverpeas sur les ports 80 et 8080, nous obtenons une **page de login**.
+En essayant d'accéder à Silverpeas sur les ports 80 et 8080, nous obtenons respectivement une **une erreur** et **une page de login**.
 
 ![Image](https://i.ibb.co/sV1s8zw/image.png){: .normal width="400" height="400" }
 ![Image](https://i.ibb.co/G470PcRM/image.png){: .normal width="400" height="400" }
@@ -107,6 +107,8 @@ Une fois connecté en tant qu'administrateur, nous explorons les outils disponib
 
 1. **Silver Crawling** : Permet de parcourir les fichiers et répertoires du serveur.
 2. **Web Site's Designer** : Permet de créer des pages web, ce qui pourrait être utilisé pour uploader un reverse shell.
+
+![Image](https://i.ibb.co/ksYPRbSR/image.png){: .normal width="400" height="400" }![Image](https://i.ibb.co/x8YdX61C/image.png){: .normal width="400" height="400" }
 
 Cependant, ces outils ne donnent pas les résultats escomptés. Bien que **Silver Crawling** permette d'accéder à des fichiers sensibles comme `/etc/shadow` et `/etc/passwd`, ces fichiers ne contiennent pas de mots de passe configurés pour les utilisateurs. De plus, le répertoire `home` est vide.
 
@@ -169,4 +171,4 @@ Ce CTF nous a permis d'explorer plusieurs techniques d'exploitation, notamment l
 
 ---
 
-J'espère que ce walkthrough vous a été utile. Bonne chance dans vos futurs CTF !
+J'espère que ce walkthrough vous a été utile.
