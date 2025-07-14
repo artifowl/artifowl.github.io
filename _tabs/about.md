@@ -6,17 +6,15 @@ order: 4
 
 Je m'appelle **Elouan Le Marrec**, étudiant en Master 2 Informatique, spécialisé en cybersécurité à l’**Université Paris-Saclay**. Passionné par la *sécurité offensive*, le *reverse engineering* et la *sécurité du réseau*, je cherche constamment à approfondir mes compétences techniques à travers des projets, des CTFs et des challenges de type pentest.
 
-J’ai récemment effectué un semestre d’échange à l’**Université de Kagawa (Japon)**, où j’ai pu découvrir une nouvelle culture tout en poursuivant mes travaux dans le domaine de la sécurité informatique.
-
 ---
 
 ## 🎓 **Formation**
-- **Master 2 SeCReTS**
+- **Master 2 SeCReTS** <br>
   Université Paris-Saclay, France (2025–2026)
 - **Programme d'échange M1**  
   Université de Kagawa, Japon (2024-2025)
 - **Licence en Informatique**  
-  Université Savoie Mont Blanc, (2020 - 2023)
+  Université Savoie Mont Blanc, France (2020 - 2023)
 
 ---
 
