@@ -4,11 +4,15 @@ icon: fas fa-info-circle
 order: 4
 ---
 
-Je m'appelle **Elouan Le Marrec**, étudiant en Master 1 Informatique spécialisé dans la **cybersécurité** et actuellement en échange à l'Université de Kagawa au Japon. Passionné par la **sécurité informatique** et les **tests d'intrusion**, je cherche continuellement à développer mes compétences techniques dans ce domaine.
+Je m'appelle **Elouan Le Marrec**, étudiant en Master 2 Informatique, spécialisé en cybersécurité à l’**Université Paris-Saclay**. Passionné par la *sécurité offensive*, le *reverse engineering* et la *sécurité du réseau*, je cherche constamment à approfondir mes compétences techniques à travers des projets, des CTFs et des challenges de type pentest.
+
+J’ai récemment effectué un semestre d’échange à l’**Université de Kagawa (Japon)**, où j’ai pu découvrir une nouvelle culture tout en poursuivant mes travaux dans le domaine de la sécurité informatique.
 
 ---
 
 ## 🎓 **Formation**
+- **Master 2 SeCReTS**
+  Université Paris-Saclay, France (2025–2026)
 - **Programme d'échange M1**  
   Université de Kagawa, Japon (2024-2025)
 - **Licence en Informatique**  
@@ -20,7 +24,7 @@ Je m'appelle **Elouan Le Marrec**, étudiant en Master 1 Informatique spécialis
 - **Cybersécurité** : Pentesting, Analyse de vulnérabilités, Réseaux sécurisés  
 - **Développement** : Python, C, JavaScript  
 - **Outils** : Ghidra, VMware, Burp Suite, Wireshark, Nmap  
-- **Langues** : Français (natif), Anglais (courant), Espagnol (intermédiaire), Japonais (N4)
+- **Langues** : Français (natif), Anglais (courant), Japonais (N4)
 
 
 ---
