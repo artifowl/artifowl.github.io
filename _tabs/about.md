@@ -10,7 +10,7 @@ Je m'appelle **Elouan Le Marrec**, étudiant en Master 2 Informatique, spéciali
 
 ## 🌐 **Retrouvez-moi**
 - [LinkedIn](https://www.linkedin.com/in/elouan-le-marrec-45798a24b/)
-- [RootMe]([https://www.linkedin.com/in/elouan-le-marrec-45798a24b/](https://www.root-me.org/Artifowl))
+- [RootMe](https://www.root-me.org/Artifowl)
 - [GitHub](https://github.com/artifowl)  
 - [TryHackMe](https://tryhackme.com/p/artifowl)  
 
