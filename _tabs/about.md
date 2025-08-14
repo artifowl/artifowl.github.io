@@ -4,39 +4,13 @@ icon: fas fa-info-circle
 order: 4
 ---
 
-Je m'appelle **Elouan Le Marrec**, étudiant en Master 2 Informatique, spécialisé en cybersécurité à l’**Université Paris-Saclay**. Passionné par la *sécurité offensive*, le *reverse engineering* et la *sécurité du réseau*, je cherche constamment à approfondir mes compétences techniques à travers des projets, des CTFs et des challenges de type pentest.
-
----
-
-## 🎓 **Formation**
-- **Master 2 SeCReTS** <br>
-  Université Paris-Saclay, France (2025–2026)
-- **Programme d'échange M1**  
-  Université de Kagawa, Japon (2024-2025)
-- **Licence en Informatique**  
-  Université Savoie Mont Blanc, France (2020 - 2023)
-
----
-
-## 🛠️ **Compétences**
-- **Cybersécurité** : Pentesting, Analyse de vulnérabilités, Réseaux sécurisés  
-- **Développement** : Python, C, JavaScript  
-- **Outils** : Ghidra, VMware, Burp Suite, Wireshark, Nmap  
-- **Langues** : Français (natif), Anglais (courant), Japonais (N4)
-
-
----
-
-## 🏆 **Badge / Progression**
-- **Badge TryHackMe**  
-  ![My THM BADGE](https://tryhackme-badges.s3.amazonaws.com/artifowl.png){: .normal }
-
-- **Certifications et challenges CTF** : *A venir...*
+Je m'appelle **Elouan Le Marrec**, étudiant en Master 2 Informatique, spécialisé en cybersécurité à l’**Université Paris-Saclay**. Je m’investis dans des projets et des travaux pratiques pour consolider mes compétences et préparer mon futur métier dans le domaine.
 
 ---
 
 ## 🌐 **Retrouvez-moi**
-- [LinkedIn](https://www.linkedin.com/in/elouan-le-marrec-45798a24b/)  
+- [LinkedIn](https://www.linkedin.com/in/elouan-le-marrec-45798a24b/)
+- [RootMe]([https://www.linkedin.com/in/elouan-le-marrec-45798a24b/](https://www.root-me.org/Artifowl))
 - [GitHub](https://github.com/artifowl)  
 - [TryHackMe](https://tryhackme.com/p/artifowl)  
 
@@ -44,4 +18,4 @@ Je m'appelle **Elouan Le Marrec**, étudiant en Master 2 Informatique, spéciali
 
 ## ✉️ **Contact**
 - **Email** : el.lemarrec@gmail.com
-- **Localisation actuelle** : Takamatsu, Japon
+- **Localisation actuelle** : Paris, France
